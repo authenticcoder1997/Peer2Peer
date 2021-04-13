@@ -73,7 +73,7 @@ class App extends Component {
     }
   }
 
-  uploadImage = name => {
+  uploadImage = (name, pno, cityst, cityend, amount) => {
     console.log("Submitting file to ipfs...")
 
     //adding file to the IPFS
@@ -85,7 +85,7 @@ class App extends Component {
       }
 
       this.setState({ loading: true })
-      this.state.user.methods.uploadImage(result[0].hash, name).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.user.methods.uploadImage(result[0].hash, name, pno, cityst, cityend, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
     })
@@ -94,6 +94,13 @@ class App extends Component {
   tipImageOwner(id, tipAmount) {
     this.setState({ loading: true })
     this.state.user.methods.tipImageOwner(id).send({ from: this.state.account, value: tipAmount }).on('transactionHash', (hash) => {
+      this.setState({ loading: false })
+    })
+  }
+
+  payImageOwner(id, amount) {
+    this.setState({ loading: true })
+    this.state.user.methods.payImageOwner(id).send({ from: this.state.account, value: amount }).on('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
   }
@@ -110,6 +117,7 @@ class App extends Component {
     this.uploadImage = this.uploadImage.bind(this)
     this.tipImageOwner = this.tipImageOwner.bind(this)
     this.captureFile = this.captureFile.bind(this)
+    this.payImageOwner = this.payImageOwner.bind(this)
   }
 
   render() {
@@ -123,6 +131,7 @@ class App extends Component {
             captureFile={this.captureFile}
             uploadImage={this.uploadImage}
             tipImageOwner={this.tipImageOwner}
+            payImageOwner={this.payImageOwner}
           />
         }
       </div>

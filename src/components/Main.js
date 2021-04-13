@@ -14,7 +14,11 @@ class Main extends Component {
               <form onSubmit={(event) => {
                 event.preventDefault()
                 const name = this.name.value
-                this.props.uploadImage(name)
+                const pno = this.pno.value
+                const cityst = this.cityst.value
+                const cityend = this.cityend.value
+                const amount = this.amount.value
+                this.props.uploadImage(name, pno, cityst, cityend, amount)
               }} >
                 <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
                 <div className="form-group mr-sm-2">
@@ -26,8 +30,38 @@ class Main extends Component {
                     className="form-control"
                     placeholder="Full Name..."
                     required />
+                  <input
+                    id="pno"
+                    type="tel"
+                    ref={(input) => { this.pno = input }}
+                    className="form-control"
+                    placeholder="Phone number" pattern="[0-9]{10}"
+                    required />
+                  <form class="form-inline">
+                    <input
+                      id="cityst"
+                      type="text"
+                      ref={(input) => { this.cityst = input }}
+                      className="form-control"
+                      placeholder="Starting City"
+                      required />
+                    <input
+                      id="cityend"
+                      type="text"
+                      ref={(input) => { this.cityend = input }}
+                      className="form-control"
+                      placeholder="Destination City"
+                      required />
+                    <input
+                      id="amount"
+                      type="number"
+                      ref={(input) => { this.amount = input }}
+                      className="form-control"
+                      placeholder="Amount"
+                      required />
+                  </form>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Upload!</button>
+                <button type="submit" className="btn btn-primary btn-block btn-lg">Upload!</button>
               </form>
               <p>&nbsp;</p>
               {this.props.images.map((image, key) => {
@@ -44,8 +78,9 @@ class Main extends Component {
                     </div>
                     <ul id="imageList" className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <p class="text-center"><img src={`https://ipfs.infura.io/ipfs/${image.hash}`} style={{ maxWidth: '420px' }} /></p>
-                        <p>{image.name}</p>
+                        <p className="text-center"><img src={`https://ipfs.infura.io/ipfs/${image.hash}`} style={{ maxWidth: '420px' }} /></p>
+                        <p>{image.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{image.pno}</p>
+                        <p>{image.cityst}&nbsp;&nbsp;&nbsp;&nbsp;------{'>'}&nbsp;&nbsp;&nbsp;&nbsp;{image.cityend}</p>
                       </li>
                       <li key={key} className="list-group-item py-2">
                         <small className="float-left mt-1 text-muted">
@@ -55,12 +90,23 @@ class Main extends Component {
                           className="btn btn-link btn-sm float-right pt-0"
                           name={image.id}
                           onClick={(event) => {
-                            let tipAmount = window.web3.utils.toWei('0.1', 'Ether')
+                            let tipAmount = window.web3.utils.toWei('1.0', 'Ether')
                             console.log(event.target.name, tipAmount)
                             this.props.tipImageOwner(event.target.name, tipAmount)
                           }}
                         >
-                          TIP 0.1 ETH
+                          TIP 1.0 ETH
+                        </button>
+                        <button
+                          className="btn btn-link btn-sm float-right pt-0"
+                          name={image.id}
+                          onClick={(event) => {
+                            let payAmount = window.web3.utils.toWei(image.amount, 'Ether')
+                            console.log(event.target.name, payAmount)
+                            this.props.payImageOwner(event.target.name, payAmount)
+                          }}
+                        >
+                          PAY {image.amount}.0 ETH
                         </button>
                       </li>
                     </ul>
