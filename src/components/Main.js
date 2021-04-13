@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 
 class Main extends Component {
-
   render() {
     return (
       <div className="container-fluid mt-5">
@@ -17,8 +16,13 @@ class Main extends Component {
                 const pno = this.pno.value
                 const cityst = this.cityst.value
                 const cityend = this.cityend.value
+                const timest = this.timest.value
+                const timeend = this.timest.value
+                const date = this.date.value
                 const amount = this.amount.value
-                this.props.uploadImage(name, pno, cityst, cityend, amount)
+                const merge = pno + "," + timest + "," + timeend + "," + date
+                console.log(merge)
+                this.props.uploadImage(name, merge, cityst, cityend, amount)
               }} >
                 <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
                 <div className="form-group mr-sm-2">
@@ -37,7 +41,7 @@ class Main extends Component {
                     className="form-control"
                     placeholder="Phone number" pattern="[0-9]{10}"
                     required />
-                  <form class="form-inline">
+                  <div className="form-inline">
                     <input
                       id="cityst"
                       type="text"
@@ -53,18 +57,41 @@ class Main extends Component {
                       placeholder="Destination City"
                       required />
                     <input
+                      id="timest"
+                      type="time"
+                      ref={(input) => { this.timest = input }}
+                      className="form-control"
+                      placeholder="Arrival Time"
+                      required />
+                    <input
+                      id="timeend"
+                      type="time"
+                      ref={(input) => { this.timeend = input }}
+                      className="form-control"
+                      placeholder="Departure Time"
+                      required />
+                    <input
+                      id="date"
+                      type="date"
+                      ref={(input) => { this.date = input }}
+                      className="form-control"
+                      placeholder="Date"
+                      required />
+                    <input
                       id="amount"
                       type="number"
                       ref={(input) => { this.amount = input }}
                       className="form-control"
                       placeholder="Amount"
                       required />
-                  </form>
+                  </div>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block btn-lg">Upload!</button>
               </form>
               <p>&nbsp;</p>
               {this.props.images.map((image, key) => {
+                var res1 = image.merge
+                var res2 = res1.split(",")
                 return (
                   <div className="card mb-4" key={key} >
                     <div className="card-header">
@@ -79,8 +106,8 @@ class Main extends Component {
                     <ul id="imageList" className="list-group list-group-flush">
                       <li className="list-group-item">
                         <p className="text-center"><img src={`https://ipfs.infura.io/ipfs/${image.hash}`} style={{ maxWidth: '420px' }} /></p>
-                        <p>{image.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{image.pno}</p>
-                        <p>{image.cityst}&nbsp;&nbsp;&nbsp;&nbsp;------{'>'}&nbsp;&nbsp;&nbsp;&nbsp;{image.cityend}</p>
+                        <p>Name: &nbsp;{image.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone No:&nbsp;{res2[0]}</p>
+                        <p>{image.cityst}&nbsp;({res2[1]})&nbsp;&nbsp;&nbsp;------{'>'}&nbsp;&nbsp;&nbsp;&nbsp;{image.cityend}&nbsp;({res2[2]})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{res2[3]}</p>
                       </li>
                       <li key={key} className="list-group-item py-2">
                         <small className="float-left mt-1 text-muted">

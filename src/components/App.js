@@ -73,7 +73,7 @@ class App extends Component {
     }
   }
 
-  uploadImage = (name, pno, cityst, cityend, amount) => {
+  uploadImage = (name, merge, cityst, cityend, amount) => {
     console.log("Submitting file to ipfs...")
 
     //adding file to the IPFS
@@ -85,7 +85,7 @@ class App extends Component {
       }
 
       this.setState({ loading: true })
-      this.state.user.methods.uploadImage(result[0].hash, name, pno, cityst, cityend, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.user.methods.uploadImage(result[0].hash, name, merge, cityst, cityend, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
     })

@@ -9,7 +9,7 @@ contract Users {
         uint256 id;
         string hash;
         string name;
-        string pno;
+        string merge;
         string cityst;
         string cityend;
         string amount;
@@ -21,7 +21,7 @@ contract Users {
         uint256 id,
         string hash,
         string name,
-        string pno,
+        string merge,
         string cityst,
         string cityend,
         string amount,
@@ -33,7 +33,7 @@ contract Users {
         uint256 id,
         string hash,
         string name,
-        string pno,
+        string merge,
         string cityst,
         string cityend,
         uint256 tipAmount,
@@ -44,7 +44,7 @@ contract Users {
         uint256 id,
         string hash,
         string name,
-        string pno,
+        string merge,
         string cityst,
         string cityend,
         string amount,
@@ -58,7 +58,7 @@ contract Users {
     function uploadImage(
         string memory _imgHash,
         string memory _name,
-        string memory _pno,
+        string memory _merge,
         string memory _cityst,
         string memory _cityend,
         string memory _amount
@@ -67,7 +67,7 @@ contract Users {
         require(bytes(_imgHash).length > 0);
         // Make sure image name exists
         require(bytes(_name).length > 0);
-        require(bytes(_pno).length > 0);
+        require(bytes(_merge).length > 0);
         require(bytes(_cityst).length > 0);
         require(bytes(_cityend).length > 0);
         // Make sure uploader address exists
@@ -83,7 +83,7 @@ contract Users {
             imageCount,
             _imgHash,
             _name,
-            _pno,
+            _merge,
             _cityst,
             _cityend,
             _amount,
@@ -95,7 +95,7 @@ contract Users {
             imageCount,
             _imgHash,
             _name,
-            _pno,
+            _merge,
             _cityst,
             _cityend,
             _amount,
@@ -122,7 +122,7 @@ contract Users {
             _id,
             _image.hash,
             _image.name,
-            _image.pno,
+            _image.merge,
             _image.cityst,
             _image.cityend,
             _image.tipAmount,
@@ -148,7 +148,7 @@ contract Users {
             _id,
             _image.hash,
             _image.name,
-            _image.pno,
+            _image.merge,
             _image.cityst,
             _image.cityend,
             _image.amount,
