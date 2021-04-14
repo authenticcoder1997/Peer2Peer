@@ -12,7 +12,7 @@ class Main extends Component {
   render() {
     console.log(this.state.value1)
     return (
-      <div className="container-fluid mt-5">
+      <div className="container-fluid">
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '500px' }}>
             <div className="content mr-auto ml-auto">
@@ -115,8 +115,8 @@ class Main extends Component {
                     type="text"
                     ref={(input) => { this.fend = input }}
                     className="form-control"
-                    placeholder="Destination City" />&nbsp;
-                <button type="submit" className="btn btn-dark btn-md" onClick={() => this.setState({ value1: this.fcity, value2: this.fend })}>Filter!</button>
+                    placeholder="Destination City" />
+                  <button type="submit" className="btn btn-dark btn-sm" onClick={() => this.setState({ value1: this.fcity, value2: this.fend })}>Filter!</button>
                 </div>
               </form>
               <p>&nbsp;</p>

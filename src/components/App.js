@@ -1,8 +1,8 @@
 import Users from '../abis/Users.json'
 import React, { Component } from 'react';
-import Identicon from 'identicon.js';
 import Navbar from './Navbar'
 import Main from './Main'
+import Map from './Map'
 import Web3 from 'web3';
 import './App.css';
 
@@ -111,7 +111,8 @@ class App extends Component {
       account: '',
       user: null,
       images: [],
-      loading: true
+      loading: true,
+      map: false
     }
 
     this.uploadImage = this.uploadImage.bind(this)
@@ -124,9 +125,11 @@ class App extends Component {
     return (
       <div>
         <Navbar account={this.state.account} />
+        <br /><br />&nbsp;
+        <button type="submit" className="btn btn-primary btn-md" onClick={() => this.setState({ map: !this.state.map })}>Map!</button>
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
+          : this.state.map ? <Map /> : <Main
             images={this.state.images}
             captureFile={this.captureFile}
             uploadImage={this.uploadImage}
