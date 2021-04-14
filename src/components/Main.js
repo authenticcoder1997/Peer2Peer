@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value1: "",
+      value2: ""
+    };
+  }
   render() {
+    console.log(this.state.value1)
     return (
       <div className="container-fluid mt-5">
         <div className="row">
@@ -17,11 +25,11 @@ class Main extends Component {
                 const cityst = this.cityst.value
                 const cityend = this.cityend.value
                 const timest = this.timest.value
-                const timeend = this.timest.value
+                const timeend = this.timeend.value
                 const date = this.date.value
                 const amount = this.amount.value
                 const merge = pno + "," + timest + "," + timeend + "," + date
-                console.log(merge)
+                // console.log(merge)
                 this.props.uploadImage(name, merge, cityst, cityend, amount)
               }} >
                 <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
@@ -89,7 +97,30 @@ class Main extends Component {
                 <button type="submit" className="btn btn-primary btn-block btn-lg">Upload!</button>
               </form>
               <p>&nbsp;</p>
-              {this.props.images.map((image, key) => {
+              <form onSubmit={(event) => {
+                event.preventDefault()
+                const fcity = this.fcity.value
+                const fend = this.fend.value
+                this.setState({ value1: fcity, value2: fend })
+              }}>
+                <div className="form-inline">
+                  <input
+                    id="fcity"
+                    type="text"
+                    ref={(input) => { this.fcity = input }}
+                    className="form-control"
+                    placeholder="Starting City" />
+                  <input
+                    id="fend"
+                    type="text"
+                    ref={(input) => { this.fend = input }}
+                    className="form-control"
+                    placeholder="Destination City" />&nbsp;
+                <button type="submit" className="btn btn-dark btn-md" onClick={() => this.setState({ value1: this.fcity, value2: this.fend })}>Filter!</button>
+                </div>
+              </form>
+              <p>&nbsp;</p>
+              {this.props.images.filter(image => { return (image.cityst.indexOf(this.state.value1) >= 0) && (image.cityend.indexOf(this.state.value2) >= 0) }).map((image, key) => {
                 var res1 = image.merge
                 var res2 = res1.split(",")
                 return (
