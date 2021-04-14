@@ -1,5 +1,5 @@
-# Blockchain-Instagram-
-Instagram Clone using blockchain and reactjs
+# Peer2Peer-
+Peer2Peer Ride Sharing using blockchain and reactjs
 
 
 Steps to install:-
